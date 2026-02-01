@@ -1,0 +1,1 @@
+alert("Hello, please fill out the contact form!");

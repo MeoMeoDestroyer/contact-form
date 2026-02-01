@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form - Professional Network</title>
+
+     <!-- Styles -->
+    <link rel="icon"  href="img/ficon.png">
+    <link rel="stylesheet" href="stylesheet/styles.css">
+     <!-- Scripts -->
+     <script src="js/contact-form.js"></script>
+    
+</head>
+<body>
+    <div class="container">
+        <main class="form-wrapper">
+            <h1>Contact Form</h1>
+            
+            <form id="contactForm" method="POST" action="/submit">
+                <div class="form-grid">
+                    <div class="form">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    
+                    <div class="form">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                    
+                    <div class="form">
+                        <label for="jobTitle">Job Title</label>
+                        <input type="text" id="jobTitle" name="jobTitle" required>
+                    </div>
+                    
+                    <div class="form">
+                        <label for="company">Company</label>
+                        <input type="text" id="company" name="company" required>
+                    </div>
+                    
+                    <div class="form">
+                        <label for="linkedinUrl">LinkedIn URL</label>
+                        <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://">
+                    </div>
+                    
+                    <div class="form">
+                        <label for="emailAddress">Email Address</label>
+                        <input type="email" id="emailAddress" name="emailAddress" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-half">
+                        <label for="howDidWeMeet">How did we meet?</label>
+                        <select id="howDidWeMeet" name="howDidWeMeet" required>
+                            <option value="">Please select</option>
+                            <option value="conference">Conference</option>
+                            <option value="networking">Networking Event</option>
+                            <option value="referral">Referral</option>
+                            <option value="linkedin">LinkedIn</option>
+                            <option value="work">Work/Professional</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-half">
+                        <label for="otherSpecify">Other (please specify)</label>
+                        <input type="text" id="otherSpecify" name="otherSpecify">
+                    </div>
+                </div>
+                
+                <div class="form">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5"></textarea>
+                </div>
+                
+                <div class="form-checkbox">
+                    <input type="checkbox" id="mailingList" name="mailingList" value="yes">
+                    <label for="mailingList">Please add me to your mailing list</label>
+                </div>
+                
+                <div class="form-radio-group">
+                    <span class="radio-label">Choose an email format:</span>
+                    <div class="radio-options">
+                        <div class="radio-option">
+                            <input type="radio" id="formatHtml" name="emailFormat" value="html" checked>
+                            <label for="formatHtml">HTML</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="formatText" name="emailFormat" value="text">
+                            <label for="formatText">Text</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-button">Submit</button>
+            </form>
+        </main>
+    </div>
+</body>
+</html>
