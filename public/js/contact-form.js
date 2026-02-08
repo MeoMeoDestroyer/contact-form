@@ -19,7 +19,7 @@ document.getElementById("contactForm").onsubmit = () => {
         isValid = false;
     }
 
-    // Validate email address
+    // Validate email
     let emailAddress = document.getElementById("emailAddress").value.trim();
     let mailingList = document.getElementById("mailingList");
     
