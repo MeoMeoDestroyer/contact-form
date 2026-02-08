@@ -8,52 +8,71 @@
      <!-- Styles -->
     <link rel="icon"  href="img/ficon.png">
     <link rel="stylesheet" href="stylesheet/styles.css">
-     <!-- Scripts -->
-     <script src="js/contact-form.js"></script>
-    
+    <!-- script-->
+      <script src="js/contact-form.js"></script>
 </head>
 <body>
     <div class="container">
         <main class="form-wrapper">
             <h1>Contact Form</h1>
             
-            <form id="contactForm" method="POST" action="/submit">
+            <form id="contactForm" method="POST" action="/submit" novalidate>
                 <div class="form-grid">
                     <div class="form">
-                        <label for="firstName">First Name</label>
-                        <input type="text" id="firstName" name="firstName" required>
+                        <label for="firstName">First Name:
+                            <span class="err" id="err-firstName">
+                                First name is required
+                            </span>
+                        </label>
+                        <input type="text" id="firstName" name="firstName">
                     </div>
                     
                     <div class="form">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" name="lastName" required>
+                        <label for="lastName">Last Name:
+                            <span class="err" id="err-lastName">
+                                Last name is required
+                            </span>
+                        </label>
+                        <input type="text" id="lastName" name="lastName">
                     </div>
                     
                     <div class="form">
                         <label for="jobTitle">Job Title</label>
-                        <input type="text" id="jobTitle" name="jobTitle" required>
+                        <input type="text" id="jobTitle" name="jobTitle">
                     </div>
                     
                     <div class="form">
                         <label for="company">Company</label>
-                        <input type="text" id="company" name="company" required>
+                        <input type="text" id="company" name="company">
                     </div>
                     
                     <div class="form">
-                        <label for="linkedinUrl">LinkedIn URL</label>
-                        <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://">
+                        <label for="linkedinUrl">LinkedIn URL:
+                            <span class="err" id="err-linkedinUrl">
+                                LinkedIn URL must start with https://linkedin.com/in/
+                            </span>
+                        </label>
+                        <input type="url" id="linkedinUrl" name="linkedinUrl" placeholder="https://linkedin.com/in/">
                     </div>
                     
                     <div class="form">
-                        <label for="emailAddress">Email Address</label>
-                        <input type="email" id="emailAddress" name="emailAddress" required>
+                        <label for="emailAddress">Email Address:
+                            <span class="err" id="err-emailAddress">
+                                <!-- Error message will be set dynamically -->
+                            </span>
+                        </label>
+                        <input type="email" id="emailAddress" name="emailAddress">
                     </div>
                 </div>
                 
                 <div class="form-row">
                     <div class="form-half">
-                        <label for="howDidWeMeet">How did we meet?</label>
-                        <select id="howDidWeMeet" name="howDidWeMeet" required>
+                        <label for="howDidWeMeet">How did we meet?:
+                            <span class="err" id="err-howDidWeMeet">
+                                Please select how we met
+                            </span>
+                        </label>
+                        <select id="howDidWeMeet" name="howDidWeMeet">
                             <option value="">Please select</option>
                             <option value="conference">Conference</option>
                             <option value="networking">Networking Event</option>
@@ -98,5 +117,6 @@
             </form>
         </main>
     </div>
+
 </body>
 </html>
