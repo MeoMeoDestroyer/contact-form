@@ -32,10 +32,10 @@ document.getElementById("contactForm").onsubmit = () => {
     
     // If email is provided (regardless of mailing list), validate format
     else if(emailAddress) {
-        // Using regex to validate email format
+        // Using regex to validate email format from google 
         let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if(!emailRegex.test(emailAddress)) {
-            document.getElementById("err-emailAddress").textContent = "Email must contain @ and a dot (.)";
+            document.getElementById("err-emailAddress").textContent = "Email must contain @ and a dot (.)"; // Custom error message for invalid email format
             document.getElementById("err-emailAddress").style.display = "block";
             isValid = false;
         }
