@@ -10,7 +10,7 @@ const app = express();
 
 // Define the port number where our server will listen
 
-const PORT = 3006;
+const PORT = 3004;
 
 // Middleware to parse form data
 app.use(express.urlencoded({ extended: true }));
