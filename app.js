@@ -50,7 +50,7 @@ app.post('/submit', (req, res) => {
   submissions.push(submission);
   console.log('Form data received:', submission);
     res.redirect('/confirmation');
-  
+});
   app.get('/admin', (req, res) => {
   res.json(submissions);
 });
