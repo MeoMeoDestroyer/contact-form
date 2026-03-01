@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <script src="//code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="//cdn.datatables.net/2.3.7/js/dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#submissions-table').DataTable();
+        });
+    </script>
+    <link rel="stylesheet" href="//cdn.datatables.net/2.3.7/css/dataTables.dataTables.css">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <h1>Admin Page - All Submissions</h1>
+    <!-- using IF in case no contacts to display, show message. !-->
+<% if (submissions.length === 0) { %>
+  <p>No submissions yet.</p>
+<% } else { %>
+  <table id="submissions-table" class="display">
+    <thead>                        
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Job Title</th>
+        <th>Company</th>
+        <th>LinkedIn URL</th>
+        <th>How Did We Meet?</th>
+        <th>Message</th>
+        <th>Submitted At</th>
+      </tr>
+    </thead>                    
+    <tbody>                          
+      <% submissions.forEach(submission => { %>
+        <tr>
+          <td><%= submission.firstName %> <%= submission.lastName %></td>
+          <td><%= submission.emailAddress %></td>
+          <td><%= submission.jobTitle %></td>
+          <td><%= submission.company %></td>
+          <td><%= submission.linkedinUrl %></td>
+          <td><%= submission.howDidWeMeet %></td>
+          <td><%= submission.message %></td>
+          <td><%= submission.timestamp.toLocaleString() %></td>
+        </tr>
+      <% }) %>
+    </tbody>               
+  </table>
+<% } %>
+</body>
+</html>

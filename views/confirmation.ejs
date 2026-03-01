@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Confirmed</title>
+    <link rel="icon" href="img/ficon.png">
+    <link rel="stylesheet" href="stylesheet/styles.css">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container">
+        <main class="form-wrapper">
+            <h1>Thank You <%= submission.firstName %>!</h1>
+            <h2>Your submission has been received successfully.</h2>
+            <h2>Submission details:</h2>
+            <p>Name: <%= submission.firstName %> <%= submission.lastName %></p>
+            <p>Email: <%= submission.emailAddress %></p>
+            <p>Job Title: <%= submission.jobTitle %></p>
+            <p>Company: <%= submission.company %></p>
+            <p>LinkedIn URL: <%= submission.linkedinUrl %></p>
+            <p>How Did We Meet?: <%= submission.howDidWeMeet %></p>
+            <p>Message: <%= submission.message %></p>
+            <p>Other (Specify): <%= submission.otherSpecify || 'NONE' %></p>
+            <p>Mailing List: <%= submission.mailingList || 'NO' %></p>
+            <p>Email Format: <%= submission.emailFormat || 'NONE' %></p>
+            <p>Submit Time: <%= submission.timestamp.toLocaleString() %></p>
+
+            <a href="/" class="submit-button">Back to Form</a>
+        </main>
+    </div>
+</body>
+</html>
