@@ -1,60 +1,99 @@
 // Import the express module
 import express from 'express';
+import mysql2 from 'mysql2'
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 // Create an instance of an Express application
 const app = express();
-
-// Define the port number where our server will listen
-
 const PORT = 3005;
+
+const pool = mysql2.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
+}).promise();
 
 // Middleware to parse form data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-
-//set ejs as the view engine
-app.set('view engine', 'ejs');
-
 // Define a default "route" ('/')
 app.use(express.static('public'));
 
-const submissions = [];
+//set ejs as the view engine
+app.set('view engine', 'ejs');
+app.set('views', './views');
 
 // home.html is the resume 
 app.get('/', (req, res) => {
-  res.render(`${import.meta.dirname}/views/home.ejs`);
+   res.redirect('/home')
+});
+app.get('/home', (req, res) => {
+  res.render('home');
 });
 //contact-form is the form page
 app.get('/contact-form', (req, res) => {
-  res.render(`${import.meta.dirname}/views/contact-form.ejs`);
+  res.render('contact-form');
 });
-// Confirmation.html
+
+app.post('/submit', async (req, res) => {
+  try {
+  const sql = `INSERT INTO contacts (firstName, lastName, jobTitle, company, linkedinUrl, emailAddress, howDidWeMeet, otherSpecify, message, mailingList,emailFormat) 
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`; 
+  const params = [
+    req.body.firstName,
+    req.body.lastName,
+    req.body.jobTitle,
+    req.body.company,
+    req.body.linkedinUrl,
+    req.body.emailAddress,
+    req.body.howDidWeMeet,
+    req.body.otherSpecify,
+    req.body.message,
+    req.body.mailingList || 'no',
+    req.body.emailFormat
+    ];
+
+    const [result] = await pool.execute(sql, params);
+    console.log('Contact saved with ID:' , result.insertId);
+    const submission = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      emailAddress: req.body.emailAddress
+    };
+    res.render('confirmation', {submission});
+  } catch (err) {
+     console.error('Error saving contact:', err);
+    res.status(500).send('Error saving contact. Please try again.');
+  }
+});
+    // Confirmation.html
 app.get('/confirmation', (req, res) => {
-  res.render(`${import.meta.dirname}/views/confirmation.ejs`);
+  res.render('confirmation');
 });
-app.post('/submit', (req, res) => {
-  const submission = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    jobTitle: req.body.jobTitle,
-    company: req.body.company,
-    linkedinUrl: req.body.linkedinUrl,
-    emailAddress: req.body.emailAddress,
-    howDidWeMeet: req.body.howDidWeMeet,
-    otherSpecify: req.body.otherSpecify,
-    message: req.body.message,
-    mailingList: req.body.mailingList,
-    emailFormat: req.body.emailFormat,
-    timestamp: new Date()
-  };
-  submissions.push(submission);
-  console.log('Form received:', submission);
-    res.render(`${import.meta.dirname}/views/confirmation.ejs`, {submission});
-});
+
 //admin routes
-app.get('/admin', (req, res) => {
-    res.render('admin', {submissions: submissions});
+app.get('/admin', async (req, res) => {
+  try {
+    const [contact] = await pool.query('SELECT * FROM contacts ORDER BY timestamp DESC');
+    res.render('admin', {submissions: contact});
+  } catch (err) {
+    console.error ('Database error:', err);
+    res.status(500).send('Error loading contacts: ' +err.message);
+  }
+    
+});
+
+app.get ('/db-test', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM contacts');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).send('Database error: ' + err.message);
+  }
 });
 // Start the server and listen on the specified port
 
