@@ -14,7 +14,17 @@
     <div class="container">
         <main class="form-wrapper">
             <h1>Contact Form</h1>
-            
+
+            <% if (errors && errors.length > 0) { %>
+              <div class="error-summary" role="alert">
+                <strong>Please fix the following errors:</strong>
+                <ul>
+                  <% errors.forEach(err => { %>
+                    <li><%= err %></li>
+                  <% }); %>
+                </ul>
+              </div>
+            <% } %>          
             <form id="contactForm" method="POST" action="/submit" novalidate>
                 <div class="form-grid">
                     <div class="form">
@@ -23,7 +33,7 @@
                                 First name is required
                             </span>
                         </label>
-                        <input type="text" id="firstName" name="firstName">
+                        <input type="text" id="firstName" name="firstName" value="<%= old.firstName || '' %>">
                     </div>
                     
                     <div class="form">

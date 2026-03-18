@@ -34,42 +34,80 @@ app.get('/', (req, res) => {
 app.get('/home', (req, res) => {
   res.render('home');
 });
+
+// portfolio
+app.get('/portfolio', (req, res) => res.render('portfolio'));
+
 //contact-form is the form page
 app.get('/contact-form', (req, res) => {
-  res.render('contact-form');
+  res.render('contact-form', { errors: [], old: {}});
 });
 
+// server side validation
+const validHowMet = ['conference', 'networking', 'referral', 'linkedin', 'work', 'other'];
+const validEmailFormat = ['html', 'text'];
+ 
 app.post('/submit', async (req, res) => {
+  const {
+    firstName, lastName, jobTitle, company,
+    linkedin, email, howMet, howMetOther,
+    message, mailingList, emailFormat
+  } = req.body;
+ 
+  const errors = [];
+ 
+  if (!firstName || !firstName.trim())
+    errors.push('First name is required.');
+ 
+  if (!lastName || !lastName.trim())
+    errors.push('Last name is required.');
+ 
+  if (!howMet || !validHowMet.includes(howMet))
+    errors.push('Please select how we met.');
+ 
+  if (linkedin && linkedin.trim() && !linkedin.trim().startsWith('https://linkedin.com/in/'))
+    errors.push('LinkedIn URL must start with https://linkedin.com/in/');
+  if (mailingList === 'yes') {
+    if (!emailFormat || !validEmailFormat.includes(emailFormat))
+      errors.push('Please select a valid email format (HTML or Text) for the mailing list.');
+  }
+
+  if (errors.length > 0) {
+    return res.status(422).render('contact-form', { errors, old: req.body });
+  }
+  // save to database here
   try {
   const sql = `INSERT INTO contacts (firstName, lastName, jobTitle, company, linkedinUrl, emailAddress, howDidWeMeet, otherSpecify, message, mailingList,emailFormat) 
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`; 
   const params = [
-    req.body.firstName,
-    req.body.lastName,
-    req.body.jobTitle,
-    req.body.company,
-    req.body.linkedinUrl,
-    req.body.emailAddress,
-    req.body.howDidWeMeet,
-    req.body.otherSpecify,
-    req.body.message,
-    req.body.mailingList || 'no',
-    req.body.emailFormat
-    ];
+firstName.trim(),
+  lastName.trim(),
+  jobTitle || '',
+  company  || '',
+  linkedin || '',
+  email    || '',
+  howMet,
+  howMetOther || '',
+  message  || '',
+  mailingList === 'yes' ? 'yes' : 'no',
+  emailFormat || 'html'
+];
 
     const [result] = await pool.execute(sql, params);
     console.log('Contact saved with ID:' , result.insertId);
-    const submission = {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      emailAddress: req.body.emailAddress
-    };
-    res.render('confirmation', {submission});
+
+    res.render('confirmation', {
+      submission: {
+       firstName: firstName.trim(),
+        lastName:  lastName.trim(),
+        email:     email || '' 
+      }});
   } catch (err) {
      console.error('Error saving contact:', err);
     res.status(500).send('Error saving contact. Please try again.');
   }
 });
+
     // Confirmation.html
 app.get('/confirmation', (req, res) => {
   res.render('confirmation');
@@ -83,10 +121,10 @@ app.get('/admin', async (req, res) => {
   } catch (err) {
     console.error ('Database error:', err);
     res.status(500).send('Error loading contacts: ' +err.message);
-  }
-    
+  }   
 });
 
+// db-test
 app.get ('/db-test', async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT * FROM contacts');
@@ -95,9 +133,13 @@ app.get ('/db-test', async (req, res) => {
     res.status(500).send('Database error: ' + err.message);
   }
 });
-// Start the server and listen on the specified port
 
-  
+// 404 page not found , then go back home
+app.use((req, res) => {
+  res.status(404).send('<h1>404 – Page Not Found</h1><a href="/">← Back to Home</a>');
+});
+
+// Start the server and listen on the specified port
 app.listen(PORT, () => {
     console.log(`Server is running at http://localhost:${PORT}`);
 

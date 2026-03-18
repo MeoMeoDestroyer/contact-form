@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio - Kate Nguyen</title>
+  <link rel="stylesheet" href="stylesheet/styles.css">
+  <link rel="icon"  href="img/ficon.png">
+</head>
+<body>
+
+  <%- include('partials/navbar') %>
+
+  <main class="page">
+    <header class="portfolio-header">
+      <h1>Portfolio</h1>
+      <p class="portfolio-intro">A curated collection of projects from my Software Development coursework and personal work, showcasing practical experience in systems programming, web development, and database design.</p>
+    </header>
+
+    <!-- SDEV 301 PROJECT — microjam -->
+    <section class="section project-card" aria-labelledby="proj-301-title">
+      <div class="project-meta">
+        <h2 id="proj-301-title">Microjam – GBA Game in C++ - Astro Cat</h2>
+      </div>
+
+      <div class="project-body">
+        <div class="project-info">
+          <p class="project-desc">A C++ game developed for the Game Boy Advance (GBA) as part of Green River College’s Cohort 23 Microjam. The project runs on real GBA hardware and emulators, demonstrating low-level implementation of graphics rendering, audio, and game loop logic without relying on a traditional operating system or standard library.</p>
+
+        <p>This was a collaborative group project with my partner Kelley and the entire class from CSC 301, where each team contributed a small game that was ultimately combined into one larger experience.</p>
+
+          <div class="project-detail-grid">
+            <div>
+              <h3>Technologies Used</h3>
+              <ul>
+                <li>C++ (low-level systems and embedded programming)</li>
+                <li>Game Boy Advance (GBA) hardware architecture and memory management</li>
+                <li>devkitARM / libgba toolchain for cross-compilation and deployment</li>
+                <li>OpenGameArt (integration of audio assets: sound effects and music)</li>
+                <li>Makefile-based build automation and dependency management</li>
+                <li>Aseprite (pixel art design and sprite asset pipeline)</li>
+                <li>GitHub Actions (CI/CD pipeline for automated builds and validation)</li>
+
+              </ul>
+            </div>
+            <div>
+              <h3>My Role</h3>
+              <p>Contributor in a cohort-wide collaborative game jam, helping integrate multiple team-developed modules into a single unified game. Focused on implementing core game logic, developing sprite and graphical assets, and supporting the build pipeline.</p>
+
+            <p>Improved visual fluidity and responsiveness by adding sprite animations using LibreSprite. Gained hands-on experience with low-level memory management and GBA-specific rendering techniques in a constrained hardware environment.</p>
+            </div>
+          </div>
+          <div class="project-links">
+            <a href="https://github.com/kacastillo/microjam" target="_blank" rel="noopener" class="btn-project">View on GitHub</a>
+          </div>
+          <div class ="project-screenshots">
+            <firgure>
+              <img src="img/301.gif" alt="Astro Cat gameplay GIF">
+              <figcaption>Gameplay - Astro Cat navigating dodging planet and shooting star</figcaption>
+            </firgure>
+          </div>
+
+          </div>
+        </div>
+        </section>
+
+    <!-- ===== SDEV 305 PROJECT ===== -->
+    <section class="section project-card" aria-labelledby="proj-305-title">
+      <div class="project-meta">
+        <h2 id="proj-305-title">Database-Backed Resume App with MySQL</h2>
+      </div>
+
+      <div class="project-body">
+        <div class="project-info">
+          <p class="project-desc">A full-stack web application combining a personal resume site with a guestbook system, designed to persist contact form submissions in a MySQL database. Implements robust server-side validation, modular EJS templating with reusable partials, and a dynamic, sortable admin dashboard powered by DataTables. Deployed on DigitalOcean with a focus on maintainability and scalable architecture.</p>
+
+          <div class="project-detail-grid">
+            <div>
+              <h3>Technologies Used</h3>
+              <ul>
+                <li>Node.js &amp; Express.js (RESTful server architecture)</li>
+                <li>MySQL 8 (relational database design, querying, and indexing)</li>
+                <li>mysql2/promise (asynchronous database interaction)</li>
+                <li>EJS templating with reusable partials (server-side rendering)</li>
+                <li>DataTables.js (interactive, sortable admin dashboard)</li>
+                <li>dotenv (secure environment configuration management)</li>
+                <li>Server-side and client-side form validation</li>
+                <li>DigitalOcean App Platform (cloud deployment and hosting)</li>
+              </ul>
+            </div>
+            <div>
+              <h3>My Role</h3>
+              <p>Sole developer who designed and built the full stack from scratch, including the resume layout, contact form with both client and server side validation, confirmation flow, admin submission dashboard, shared navigation partials, and portfolio page. Deployed on DigitalOcean.</p>
+
+            <p>The application evolved from multiple course projects that were gradually integrated into a single cohesive system.</p>
+            </div>
+          </div>
+
+          <div class="project-links">
+            <a href="https://github.com/MeoMeoDestroyer/contact-form" target="_blank" rel="noopener" class="btn-project">View on GitHub</a>
+          </div>
+
+          </div>
+        </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <a href="https://github.com/MeoMeoDestroyer?tab=repositories" target="_blank" rel="noopener">GitHub Repositories</a>
+    &nbsp;·&nbsp;
+    <a href="https://www.linkedin.com/in/kate-nguyen-4085b3247/" target="_blank" rel="noopener">LinkedIn Profile</a>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+    if (toggle && navLinks) {
+      toggle.addEventListener('click', function () {
+        const open = navLinks.classList.toggle('open');
+        this.setAttribute('aria-expanded', open);
+      });
+    }
+    document.querySelectorAll('.nav-link').forEach(link => {
+      if (link.getAttribute('href') === window.location.pathname) {
+        link.classList.add('active');
+      }
+    });
+  </script>
+</body>
+</html>
